@@ -7,7 +7,8 @@
 2. Review prerequisites and install necessary extensions.
 3. Create a new Azure Functions project using the VS Code extension.
 4. Choose the Python runtime and HTTP trigger template.
-5. Run the function locally and test the endpoint.
+5. Install the required Python packages into the virtual environment.
+6. Run the function locally and test the endpoint.
 
 ## Steps
 
@@ -33,7 +34,21 @@
 7. Provide a name for your function, such as `HelloWorldHttpTrigger`.
 8. Choose **Anonymous** for the Authorization level. This allows anyone to call the function without an API key, simplifying our lab.
 
-### Step 4: Run the Function Locally
+### Step 4: Install Dependencies
+
+Before running the function, you must install the required Python packages (like `azure-functions`) into your virtual environment.
+
+1. Open a new Terminal in VS Code (`Terminal -> New Terminal`).
+2. Ensure your virtual environment is activated. You should see `(.venv)` at the start of your terminal prompt.
+   - If it's not activated, VS Code usually prompts you to activate it when you open a Python file, or you can run:
+     - Windows: `.venv\Scripts\activate`
+     - Mac/Linux: `source .venv/bin/activate`
+3. Run the following command to install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Step 5: Run the Function Locally
 
 1. Once the project is created, VS Code will generate several files, including `function_app.py` (if using the v2 programming model) or a folder named `HelloWorldHttpTrigger` with an `__init__.py` file (v1 model). We will assume the v2 model for modern Python functions.
 2. Open `function_app.py` and review the generated code. It should look something like this:
@@ -71,7 +86,7 @@ def HelloWorldHttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
 5. Look for a line that says something like:
    `HelloWorldHttpTrigger: [GET,POST] http://localhost:7071/api/HelloWorldHttpTrigger`
 
-### Step 5: Test the Local Endpoint
+### Step 6: Test the Local Endpoint
 
 1. Ctrl+Click (or Cmd+Click on Mac) the URL in the terminal, or copy and paste it into your browser.
 2. You should see the default response: "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
