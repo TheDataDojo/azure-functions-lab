@@ -21,8 +21,8 @@
 1. On the "Custom deployment" screen in the Azure Portal, you will see a few fields to fill out.
 2. **Subscription:** Select your active Azure subscription.
 3. **Resource group:** Click "Create new" and enter a name (e.g., `rg-azure-functions-lab`).
-4. **Region:** Choose a region close to you (e.g., `East US`).
-5. **Resource Name Prefix:** Enter a short, unique prefix (e.g., `aflab123`). This prefix will be used to generate names for your Storage Account, App Service Plan, and Function App.
+4. **Region:** Choose a region close to you (e.g., `West US 2` or `North Europe`). The default is `West US 2`.
+5. **Prefix:** Enter a short, unique prefix (3-10 lowercase characters, e.g., `aflab123`). This prefix will be used to generate names for your Storage Account, App Service Plan, and Function App.
 
 ### Step 3: Review and Create
 
@@ -37,8 +37,8 @@
 2. You should see the following resources created:
    - **Storage account:** Used by the Function App for internal state management.
    - **Application Insights:** Used for monitoring and logging.
-   - **App Service plan:** The hosting plan (usually Consumption/Serverless) for your function.
-   - **Function App:** The actual Azure Function resource where your code will be deployed.
+   - **App Service plan:** The hosting plan (`Basic B1`) for your function. This plan is used to avoid quota issues common with the Consumption tier.
+   - **Function App:** The actual Azure Function resource where your Python code will be deployed.
 
 ## Expected Result
 
