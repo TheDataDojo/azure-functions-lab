@@ -67,12 +67,10 @@ Follow the labs in order. All detailed instructions are in the `labs/` folder:
 
 | Lab | Description |
 |---|---|
-| [Lab 0: Provision Environment](./labs/lab-0-provision-environment.md) | Deploy Azure resources using the Deploy to Azure button |
-| [Lab 1: Create Function in VS Code](./labs/lab-1-create-function-in-vscode.md) | Create, run, and test the function locally |
-| [Lab 2: Push to GitHub and Deploy](./labs/lab-2-push-to-github-and-deploy.md) | Commit code and deploy via GitHub Actions |
-| [Lab 3: Modify and Redeploy](./labs/lab-3-modify-and-redeploy.md) | Change the response and watch CI/CD redeploy it |
-| [Lab 4: Deploy to an Existing Function App](./labs/lab-4-use-existing-function-app.md) | Use VS Code to deploy directly to a pre-provisioned Function App, then automate it with GitHub Actions |
-| [Lab 5: Create and Deploy Directly from VS Code](./labs/lab-5-create-and-deploy-from-vscode.md) | Create a new function in VS Code from scratch and deploy it directly to Azure — no GitHub required |
+| [Lab 0: Provision Environment](./labs/lab-0-provision-environment.md) | Provision Azure resources via the Deploy to Azure button or manually through the Azure Portal |
+| [Lab 1: Create Function in VS Code](./labs/lab-1-create-function-in-vscode.md) | Create, run, and test the function locally in VS Code |
+| [Lab 2: Deploy to Azure](./labs/lab-2-push-to-github-and-deploy.md) | Deploy to Azure directly from VS Code or via GitHub Actions CI/CD |
+| [Lab 4: Modify and Redeploy](./labs/lab-4-modify-and-redeploy.md) | Modify an existing function and redeploy via VS Code or GitHub Actions |
 
 ## Validation
 
