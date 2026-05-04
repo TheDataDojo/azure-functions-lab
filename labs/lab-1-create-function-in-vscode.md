@@ -3,102 +3,74 @@
 **Objective:** Set up a local Azure Function project in Visual Studio Code, write a simple HTTP-triggered Python function, and run it locally.
 
 **What you will do:**
-1. Open the project folder in VS Code.
-2. Review prerequisites and install necessary extensions.
-3. Create a new Azure Functions project using the VS Code extension.
-4. Choose the Python runtime and HTTP trigger template.
-5. Install the required Python packages into the virtual environment.
-6. Run the function locally and test the endpoint.
+1. Install prerequisites and the Azure Functions extension.
+2. Create a new Azure Functions project using the VS Code extension.
+3. Install the required Python dependencies into a virtual environment.
+4. Run the function locally and test the endpoint.
 
-## Steps
+---
 
-### Step 1: Open the Project in VS Code
+## Step 1: Install Prerequisites
 
-1. Open your terminal or command prompt.
-2. Navigate to the `src` folder in this repository.
-3. Type `code .` to open the folder in Visual Studio Code.
+Before starting, ensure you have the following installed on your machine:
+- **Visual Studio Code**
+- **Python 3.10 or 3.11** (ensure Python is added to your PATH)
+- **Azure Functions Core Tools** (allows you to run functions locally)
 
-### Step 2: Review Prerequisites
+In VS Code, install the following extensions from the Extensions view (`Ctrl+Shift+X`):
+- **Python** (by Microsoft)
+- **Azure Functions** (by Microsoft)
 
-1. In VS Code, ensure you have the **Azure Functions** extension installed. You can find it in the Extensions view (Ctrl+Shift+X) by searching for "Azure Functions".
-2. Also, ensure you have the **Python** extension installed.
+---
 
-### Step 3: Create a New Azure Functions Project
+## Step 2: Create a New Project in VS Code
 
-1. In VS Code, open the Command Palette (Ctrl+Shift+P).
-2. Type `Azure Functions: Create New Project...` and select it.
-3. Select the current folder (`src`) as the project location.
-4. Choose **Python** as the language.
-5. Choose a Python alias (e.g., `python3` or a specific virtual environment if you have one set up).
-6. Select **HTTP trigger** as the template for your first function.
-7. Provide a name for your function, such as `HelloWorldHttpTrigger`.
-8. Choose **Anonymous** for the Authorization level. This allows anyone to call the function without an API key, simplifying our lab.
+1. Open Visual Studio Code.
+2. Click the **Azure** icon in the left Activity Bar (it looks like an 'A').
+3. Under the **Workspace** section, click the **Create Function** button (a lightning bolt icon with a plus sign).
+4. VS Code will prompt you for several details at the top of the screen:
+   - **Folder:** Select a new empty folder on your computer (e.g., `my-local-function`).
+   - **Language:** Select **Python**.
+   - **Python Interpreter:** Select **Python 3.11** (or the version installed on your machine).
+   - **Programming Model:** Select **Model V2**.
+   - **Template:** Select **HTTP trigger**.
+   - **Function Name:** Enter `HelloWorldHttpTrigger`.
+   - **Authorization Level:** Select **Anonymous**.
+5. VS Code will generate the project files, including `function_app.py`, `host.json`, and `requirements.txt`.
 
-### Step 4: Install Dependencies
+---
 
-Before running the function, you must install the required Python packages (like `azure-functions`) into your virtual environment.
+## Step 3: Install Dependencies
 
-1. Open a new Terminal in VS Code (`Terminal -> New Terminal`).
-2. Ensure your virtual environment is activated. You should see `(.venv)` at the start of your terminal prompt.
-   - If it's not activated, VS Code usually prompts you to activate it when you open a Python file, or you can run:
-     - Windows: `.venv\Scripts\activate`
-     - Mac/Linux: `source .venv/bin/activate`
-3. Run the following command to install the required packages:
+Before running the function, you must install the required Python packages into the virtual environment that VS Code just created.
+
+1. Open the integrated terminal in VS Code (`Ctrl + \`` or **Terminal > New Terminal**).
+2. Ensure your virtual environment is activated. Your terminal prompt should start with `(.venv)`.
+   - *If it is not activated, run `.venv\Scripts\activate` (Windows) or `source .venv/bin/activate` (Mac/Linux).*
+3. Run the following command to install the Azure Functions package:
    ```bash
    pip install -r requirements.txt
    ```
 
-### Step 5: Run the Function Locally
+---
 
-1. Once the project is created, VS Code will generate several files, including `function_app.py` (if using the v2 programming model) or a folder named `HelloWorldHttpTrigger` with an `__init__.py` file (v1 model). We will assume the v2 model for modern Python functions.
-2. Open `function_app.py` and review the generated code. It should look something like this:
+## Step 4: Run and Test Locally
 
-```python
-import azure.functions as func
-import logging
-
-app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
-
-@app.route(route="HelloWorldHttpTrigger")
-def HelloWorldHttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
-
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
-
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-    else:
-        return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
-        )
-```
-
-3. To run the function, press **F5** or go to the Run and Debug view and click the play button.
-4. VS Code will start the Azure Functions Core Tools. You should see output in the Terminal panel.
-5. Look for a line that says something like:
-   `HelloWorldHttpTrigger: [GET,POST] http://localhost:7071/api/HelloWorldHttpTrigger`
-
-### Step 6: Test the Local Endpoint
-
-1. Ctrl+Click (or Cmd+Click on Mac) the URL in the terminal, or copy and paste it into your browser.
-2. You should see the default response: "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-3. Try adding `?name=YourName` to the end of the URL (e.g., `http://localhost:7071/api/HelloWorldHttpTrigger?name=Alice`).
-4. The response should change to "Hello, Alice. This HTTP triggered function executed successfully."
+1. Press **F5** (or click **Run > Start Debugging**) to start the function locally.
+2. The terminal will output the local URL of your function. It should look like this:
+   `http://localhost:7071/api/HelloWorldHttpTrigger`
+3. Open a web browser and navigate to that URL. You should see a message asking you to pass a name in the query string.
+4. Test it by appending `?name=Azure` to the URL:
+   `http://localhost:7071/api/HelloWorldHttpTrigger?name=Azure`
+5. The browser should respond with: *"Hello, Azure. This HTTP triggered function executed successfully."*
+6. Stop the debugger in VS Code by pressing **Shift + F5** (or clicking the red square stop button).
 
 ## Validation
 
-1. The function runs locally without errors.
-2. You can access the local endpoint via a browser or a tool like `curl`.
-3. The function returns the expected default response and personalized response when a name is provided.
+1. The function starts successfully without any `ModuleNotFoundError` exceptions.
+2. The local endpoint `http://localhost:7071/api/HelloWorldHttpTrigger` is accessible.
+3. The function returns a personalized greeting when a `name` parameter is provided.
 
 ## Expected Result
 
-You have successfully created and tested a local Python Azure Function in VS Code. You are now ready to deploy it to Azure.
+You now have a working Azure Function running on your local machine, ready to be deployed to the cloud.
